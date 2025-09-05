@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useRef } from "react";
-import axiosClient from "../axios-client";
+import { useRef, useState } from "react";
+import axiosClient from "../utility/axios-client";
 import { useStateContext } from "../context/ContextProvider";
 
 export default function Signup() {
@@ -8,6 +8,8 @@ export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+
+  const [errors, setErrors] = useState({});
 
   const { setUser, setToken } = useStateContext();
 
@@ -21,19 +23,20 @@ export default function Signup() {
       password_confirmation: confirmPasswordRef.current.value,
     };
 
-    axiosClient.post("/register", payload)
-    .then((response) => {
-      setUser(response.data.user);
-      setToken(response.data.token);
-    })
-    .catch((error) => {
-      const response = error.response;
-      if(response?.status === 422){
-        // validation errors
-        const errors = response.data.errors;
-        console.log(errors);
-      }
-    });
+    axiosClient
+      .post("/register", payload)
+      .then((response) => {
+        setUser(response.data.user);
+        setToken(response.data.token);
+      })
+      .catch((error) => {
+        const response = error.response;
+        if (response?.status === 422) {
+          // validation errors
+          const errors = response.data.errors;
+          setErrors(errors);
+        }
+      });
 
     console.log(payload);
   };
@@ -43,6 +46,17 @@ export default function Signup() {
       <div className="form">
         <form onSubmit={onSubmit}>
           <h1 className="title">Signup</h1>
+
+          {/* validation errors */}
+          {Object.keys(errors).length > 0 && (
+            <div className="alert animated fadeInDown">
+              {Object.keys(errors).map((key, index) => (
+                <p key={index}>{errors[key][0]}</p>
+              ))}
+            </div>
+          )}
+          {/* END validation errors */}
+
           <input ref={nameRef} type="text" placeholder="Name" />
           <input ref={emailRef} type="email" placeholder="Email" />
           <input ref={passwordRef} type="password" placeholder="Password" />
