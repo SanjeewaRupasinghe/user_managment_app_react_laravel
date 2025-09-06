@@ -251,7 +251,6 @@ table > tbody > tr > td {
   }
 }
 
-
 .ps-1 {
     padding-left: 1rem;
 }
@@ -268,3 +267,10 @@ table > tbody > tr > td {
     padding-right: 2rem;
 }
 
+.float-end {
+    float: right;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}

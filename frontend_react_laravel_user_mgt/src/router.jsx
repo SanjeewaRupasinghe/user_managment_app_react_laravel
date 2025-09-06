@@ -6,6 +6,8 @@ import Users from "./views/Users";
 import NotFound from "./views/NotFound";
 import DefaultLayout from "./components/layout/DefaultLayout";
 import GuestLayout from "./components/layout/GuestLayout";
+import CreateUser from "./views/users/CreateUser";
+import UpdateUser from "./views/users/UpdateUser";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/users/create",
+        element: <CreateUser />,
+      },
+      {
+        path: "/users/:id",
+        element: <UpdateUser />,
       },
     ],
   },
