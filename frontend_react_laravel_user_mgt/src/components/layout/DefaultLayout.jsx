@@ -1,13 +1,25 @@
 import { Link, Outlet } from "react-router-dom";
 import { useStateContext } from "../../context/ContextProvider";
 import { Navigate } from "react-router-dom";
+import axiosClient from "../../utility/axios-client";
 
 export default function DefaultLayout() {
-  const { user, token } = useStateContext();
+  const { user, token, setUser, setToken } = useStateContext();
 
   const logout = (ev) => {
     ev.preventDefault();
-    console.log("logout");
+   console.log("logout");
+   
+    axiosClient.post('/logout')
+    .then(()=>{
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem('ACCESS_TOKEN');
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+
   };
 
   if (!token) {
@@ -29,7 +41,9 @@ export default function DefaultLayout() {
         <header>
           <div>Header</div>
           <div>
+            <span className="pe-1">
             {user.name}
+            </span>
             <Link to="#" onClick={logout}>
               Logout
             </Link>

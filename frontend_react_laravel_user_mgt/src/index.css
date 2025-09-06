@@ -250,3 +250,21 @@ table > tbody > tr > td {
     transform: translateY(0);
   }
 }
+
+
+.ps-1 {
+    padding-left: 1rem;
+}
+
+.ps-2 {
+    padding-left: 2rem;
+}
+
+.pe-1 {
+    padding-right: 1rem;
+}
+
+.pe-2 {
+    padding-right: 2rem;
+}
+

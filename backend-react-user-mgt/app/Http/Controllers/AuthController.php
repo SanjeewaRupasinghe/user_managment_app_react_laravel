@@ -21,14 +21,12 @@ class AuthController extends Controller
         $user = User::create($data);
 
         #generate token
-        $token = $user->createToken('auth-token');
-        $token->delete();
-        $token = $token->plainTextToken;
+        $token = $user->createToken('auth-token')->plainTextToken;
 
         return response()->json([
             'user' => $user,
             'token' => $token
-        ],201);
+        ], 201);
     }
 
     public function login(LoginRequest $request): JsonResponse
@@ -38,9 +36,21 @@ class AuthController extends Controller
         #check if user exists
         $user = User::where('email', $credentials['email'])->first();
 
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+        if (!$user) {
             return response()->json([
-                'message' => 'Invalid credentials'
+                'errors' =>
+                [
+                    'email' => ['Invalid email address']
+                ]
+            ], 404);
+        }
+
+        if (!Hash::check($credentials['password'], $user->password)) {
+            return response()->json([
+                'errors' =>
+                [
+                    'password' => ['Invalid credentials']
+                ]
             ], 401);
         }
 
@@ -50,7 +60,7 @@ class AuthController extends Controller
         return response()->json([
             'user' => $user,
             'token' => $token
-        ],200);
+        ], 200);
     }
 
     public function logout(LogoutRequest $request): JsonResponse
@@ -59,6 +69,6 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Logged out successfully'
-        ],204);
+        ], 204);
     }
 }
