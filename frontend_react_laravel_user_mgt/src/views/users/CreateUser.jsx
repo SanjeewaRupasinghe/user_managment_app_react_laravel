@@ -1,3 +1,4 @@
+import { useStateContext } from "../../context/ContextProvider";
 import axiosClient from "../../utility/axios-client";
 import { useRef, useState } from "react";
 
@@ -9,6 +10,8 @@ export default function CreateUser() {
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const {setNotification} = useStateContext();
 
   const onSubmit = (ev) => {
     ev.preventDefault();
@@ -26,7 +29,7 @@ export default function CreateUser() {
       .post("/user", payload)
       .then((response) => {
         console.log(response);
-        // TODO: success notification
+        setNotification("User created successfully");
       })
       .catch((error) => {
         const response = error.response;

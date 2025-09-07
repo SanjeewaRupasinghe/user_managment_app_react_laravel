@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../utility/axios-client";
 import { useEffect, useRef, useState } from "react";
+import { useStateContext } from "../../context/ContextProvider";
 
-export default function UpdateUser({ }) {
-
+export default function UpdateUser({}) {
   const { id } = useParams();
-
+  const navigate = useNavigate();
 
   const nameRef = useRef();
   const emailRef = useRef();
@@ -16,17 +16,18 @@ export default function UpdateUser({ }) {
 
   const [user, setUser] = useState({});
 
+  const { setNotification } = useStateContext();
+
   useEffect(() => {
     console.log(id);
 
     axiosClient.get(`/user/${id}`).then((response) => {
       setUser(response.data.data);
-      
+
       nameRef.current.value = response.data.data.name;
       emailRef.current.value = response.data.data.email;
       passwordRef.current.value = response.data.data.password;
       confirmPasswordRef.current.value = response.data.data.password;
-
     });
   }, []);
 
@@ -39,12 +40,13 @@ export default function UpdateUser({ }) {
       password_confirmation: confirmPasswordRef.current.value,
     };
 
+    setErrors({});
     axiosClient
-    setErrors(null)
       .put(`/user/${user.id}`, payload)
       .then((response) => {
         console.log(response);
-        // TODO: success notification
+        setNotification("User updated successfully");
+        navigate("/users");
       })
       .catch((error) => {
         const response = error.response;
