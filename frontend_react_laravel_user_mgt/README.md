@@ -22,11 +22,11 @@ The project is divided into the following folders:
 - `frontend-user-management`: Contains the frontend React code.
   - `src`: Contains the React application code.
   - `public`: Contains the publicly accessible files.
-- `public`: Contains publicly accessible files.
-- `resources`: Contains views, CSS, and JavaScript files.
-- `routes`: Contains route definitions.
-- `storage`: Contains framework generated files.
-- `tests`: Contains unit tests.
+    - `public`: Contains publicly accessible files.
+    - `resources`: Contains views, CSS, and JavaScript files.
+    - `routes`: Contains route definitions.
+    - `storage`: Contains framework generated files.
+    - `tests`: Contains unit tests.
 
 ## Clone the repository:
 
