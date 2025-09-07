@@ -7,11 +7,16 @@ use App\Models\User;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
-    // TODO: Implement comments
-    public function index()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(): JsonResponse
     {
         return response()->json([
             'status' => 'success',
@@ -19,19 +24,13 @@ class UserController extends Controller
         ]);
     }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  */
-    // public function create()
-    // {
-    //     return response()->json([
-    //         'status' => 'success',
-    //         'data' => User::create(),
-    //     ]);
-    // }
-
-    // TODO: Implement comments
-    public function store(StoreUserRequest $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\User\StoreUserRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(StoreUserRequest $request): JsonResponse
     {
         $user = User::create($request->validated());
 
@@ -41,8 +40,13 @@ class UserController extends Controller
         ]);
     }
 
-    // TODO: Implement comments
-    public function show(User $user)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show(User $user): JsonResponse
     {
         return response()->json([
             'status' => 'success',
@@ -50,19 +54,14 @@ class UserController extends Controller
         ]);
     }
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(User $user)
-    // {
-    //     return response()->json([
-    //         'status' => 'success',
-    //         'data' => $user,
-    //     ]);
-    // }
-
-    // TODO: Implement comments
-    public function update(UpdateUserRequest $request, User $user)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\User\UpdateUserRequest  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         $user->update(
             [
@@ -78,8 +77,13 @@ class UserController extends Controller
         ]);
     }
 
-    // TODO: Implement comments
-    public function destroy(User $user)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(User $user): JsonResponse
     {
         $user->delete();
 
