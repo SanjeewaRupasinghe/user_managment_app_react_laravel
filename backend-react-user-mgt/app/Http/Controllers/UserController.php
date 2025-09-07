@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -63,7 +64,13 @@ class UserController extends Controller
     // TODO: Implement comments
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $user->update(
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]
+        );
 
         return response()->json([
             'status' => 'success',

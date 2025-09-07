@@ -8,9 +8,13 @@ export default function CreateUser() {
   const confirmPasswordRef = useRef();
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = (ev) => {
     ev.preventDefault();
+
+    setLoading(true);
+
     const payload = {
       name: nameRef.current.value,
       email: emailRef.current.value,
@@ -22,6 +26,7 @@ export default function CreateUser() {
       .post("/user", payload)
       .then((response) => {
         console.log(response);
+        // TODO: success notification
       })
       .catch((error) => {
         const response = error.response;
@@ -31,6 +36,8 @@ export default function CreateUser() {
           setErrors(errors);
         }
       });
+
+    setLoading(false);
   };
 
   return (
@@ -38,7 +45,6 @@ export default function CreateUser() {
       <h1>Create User</h1>
 
       <form onSubmit={onSubmit}>
-
         {/* validation errors */}
         {Object.keys(errors).length > 0 && (
           <div className="alert animated fadeInDown">
@@ -57,7 +63,10 @@ export default function CreateUser() {
           type="password"
           placeholder="Confirm Password"
         />
-        <button type="submit" className="btn btn-primary float-end">Create User</button>
+        <button type="submit" className="btn btn-primary float-end btn-loading">
+        {loading ? <span className="spinner"></span> : ""}
+          Create User
+        </button>
       </form>
     </div>
   );

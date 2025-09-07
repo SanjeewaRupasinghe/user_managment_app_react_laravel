@@ -44,6 +44,7 @@ export default function UpdateUser({ }) {
       .put(`/user/${user.id}`, payload)
       .then((response) => {
         console.log(response);
+        // TODO: success notification
       })
       .catch((error) => {
         const response = error.response;

@@ -2,24 +2,29 @@ import { Link, Outlet } from "react-router-dom";
 import { useStateContext } from "../../context/ContextProvider";
 import { Navigate } from "react-router-dom";
 import axiosClient from "../../utility/axios-client";
+import { useEffect } from "react";
 
 export default function DefaultLayout() {
   const { user, token, setUser, setToken } = useStateContext();
 
+  useEffect(() => {
+    axiosClient.get("/user").then(({ data }) => {
+      setUser(data);
+    });
+  }, []);
+
   const logout = (ev) => {
     ev.preventDefault();
-   console.log("logout");
-   
-    axiosClient.post('/logout')
-    .then(()=>{
-      setUser(null);
-      setToken(null);
-      localStorage.removeItem('ACCESS_TOKEN');
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
-
+    axiosClient
+      .post("/logout")
+      .then(() => {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("ACCESS_TOKEN");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   if (!token) {
@@ -41,9 +46,7 @@ export default function DefaultLayout() {
         <header>
           <div>Header</div>
           <div>
-            <span className="pe-1">
-            {user.name}
-            </span>
+            <span className="pe-1">{user.name}</span>
             <Link to="#" onClick={logout}>
               Logout
             </Link>
