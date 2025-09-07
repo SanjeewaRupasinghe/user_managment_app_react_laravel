@@ -6,11 +6,10 @@ This is a Laravel + React project that allows you to manage users of your web ap
 
 The project is divided into the following folders:
 
-- `app`: Contains the application code, including Laravel controllers and models.
-  - `Http`: Contains the controllers.
-  - `Models`: Contains the models.
 - `backend-react-user-mgt`: Contains the backend Laravel code.
   - `app`: Contains the Laravel application code.
+    - `Http`: Contains the controllers.
+    - `Models`: Contains the models.
   - `bootstrap`: Contains the bootstrap files.
   - `config`: Contains configuration files.
   - `database`: Contains the database files.
@@ -31,7 +30,7 @@ The project is divided into the following folders:
 ## Clone the repository:
 
 ```bash
-$ git clone https://github.com/your-username/backend-react-user-mgt.git
+$ git clone https://github.com/SanjeewaRupasinghe/user_managment_app_react_laravel.git
 ```
 
 ## Backend Installation
